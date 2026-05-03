@@ -77,13 +77,23 @@ Print, for the user:
 
 2. **Recommended starting set** — independent mini-specs to launch now, in parallel.
 
-3. **For each starting mini-spec**, the exact command and one-line briefing:
-   ```
-   claude --worktree <task-name>
-   ```
-   > Read `specs/<feature>/tasks.md` task #N and implement it. Run verification per the spec. Commit atomically. Open a PR when done.
+Then load the `aoe` skill. Invoke it **once for the whole feature** — not once per task.
 
-Then exit.
+1. **Derive a slug**: `<feature-name>` in kebab-case, max 40 chars. This is the session identifier.
+2. **Compose a briefing** (single string, no line breaks) that includes:
+   - The spec path: `specs/<feature-name>/tasks.md`
+   - The dependency graph (inline as plain text)
+   - Which tasks are independent and should start in parallel immediately
+   - Instruction to implement each starting task via a sub-agent, then advance through dependents as blockers complete
+
+   Example shape:
+   > Read `specs/<feature-name>/tasks.md`. The dependency graph is: Task 1, Task 2, Task 3 → Task 4 → Task 5. Start tasks 1, 2, and 3 in parallel, each in its own sub-agent. As each completes, proceed to its dependents. Follow acceptance criteria and verification steps in the spec. Commit each task atomically. Open a PR when all tasks are complete. Work autonomously — do not ask for confirmation unless you hit a true blocker.
+
+Pass `slug`, `briefing`, and `agent` to the `aoe` skill. It creates one worktree session for the feature, starts the agent, and delivers the briefing. Task-level parallelism is the responsibility of the agent inside that session.
+
+**Agent selection**: default is `claude`. If the user said "use codex" or "run with codex" at any point in the session, pass `agent: codex` instead.
+
+After the session is registered and briefed, exit.
 
 # Behavioural notes
 
