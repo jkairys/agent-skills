@@ -1,6 +1,7 @@
 ---
 name: aoe
 description: Use Agent of Empires (aoe) for automated implementation of spec, decomposed or otherwise, in a git worktree
+allowed-tools: Bash(aoe list *) Bash(aoe add *) Bash(aoe session *) Bash(aoe send *) Bash(git branch *) Bash(git worktree *)
 ---
 
 You will receive a `<slug>`, a `<briefing>`, and optionally an `<agent>` from the caller. If not provided, derive:
