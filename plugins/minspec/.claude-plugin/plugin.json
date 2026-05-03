@@ -1,0 +1,11 @@
+{
+  "name": "minspec",
+  "description": "A minimum set of spec driven development tools for your project.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Jethro Kairys"
+  },
+  "skills": ["./skills/grill-me/SKILL.md", "./skills/save-intent/SKILL.md"],
+  "commands": ["./commands/feature/FEATURE.md"],
+  "agents": ["./agents/spec-author/AGENT.md"]
+}
