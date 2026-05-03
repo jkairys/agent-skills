@@ -1,0 +1,13 @@
+{
+  "name": "jkairys-plugins",
+  "owner": {
+    "name": "Jethro Kairys"
+  },
+  "plugins": [
+    {
+      "name": "minspec",
+      "source": "./plugins/minspec",
+      "description": "A minimum set of spec driven development tools for your project."
+    }
+  ]
+}

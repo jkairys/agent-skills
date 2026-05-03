@@ -1,7 +1,6 @@
 {
   "name": "minspec",
   "description": "A minimum set of spec driven development tools for your project.",
-  "version": "1.0.0",
   "author": {
     "name": "Jethro Kairys"
   },
