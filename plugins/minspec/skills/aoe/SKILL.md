@@ -1,6 +1,7 @@
 ---
 name: aoe
 description: Use Agent of Empires (aoe) for automated implementation of spec, decomposed or otherwise, in a git worktree
+allowed-tools: Bash(aoe list *) Bash(aoe add *) Bash(aoe session *) Bash(aoe send *) Bash(git branch *) Bash(git worktree *)
 ---
 
 You will receive a `<slug>`, a `<briefing>`, and optionally an `<agent>` from the caller. If not provided, derive:
@@ -23,7 +24,7 @@ Build the `aoe add` command from these parts:
 
 | Part | Value |
 |------|-------|
-| Base | `aoe add --yolo` |
+| Base | `aoe add --yolo --trust-hooks` |
 | Worktree (from main) | `-w <slug> -b` |
 | Title | `-t "<slug>"` |
 | Agent (non-default) | `-c codex` — omit entirely when using claude |
@@ -31,20 +32,21 @@ Build the `aoe add` command from these parts:
 **If already inside a worktree** (current directory is not `main`), register the current directory without creating a new worktree:
 
 ```bash
-aoe add . --yolo -t "<slug>"                  # claude (default)
-aoe add . --yolo -t "<slug>" -c codex         # codex
+aoe add . --yolo --trust-hooks -t "<slug>"                  # claude (default)
+aoe add . --yolo --trust-hooks -t "<slug>" -c codex         # codex
 ```
 
 **If on main**, let aoe create the worktree and a new branch in one step:
 
 ```bash
-aoe add --yolo -w <slug> -b -t "<slug>"               # claude (default)
-aoe add --yolo -w <slug> -b -t "<slug>" -c codex      # codex
+aoe add --yolo --trust-hooks -w <slug> -b -t "<slug>"               # claude (default)
+aoe add --yolo --trust-hooks -w <slug> -b -t "<slug>" -c codex      # codex
 ```
 
 - `-w <slug>` names both the worktree directory and the git branch.
 - `-b` creates the branch; omit if the branch already exists.
 - `-t "<slug>"` sets the session title used as the identifier in all subsequent commands.
+- `--trust-hooks` suppresses the interactive trust prompt that codex shows on first run. Required for codex; harmless for claude.
 - Do **not** use `--launch` — it tries to attach to a terminal and exits non-zero in non-interactive contexts, breaking any command chain.
 
 If `aoe add` exits non-zero (session already exists), continue with the existing session title.
